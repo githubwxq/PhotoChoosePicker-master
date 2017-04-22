@@ -30,6 +30,7 @@ import static me.iwf.photopicker.PhotoPreview.EXTRA_ACTION;
 
 /**
  * Created by donglua on 15/6/24.
+ * 图片预览页面
  */
 public class PhotoPagerActivity extends AppCompatActivity {
 
@@ -56,6 +57,17 @@ public class PhotoPagerActivity extends AppCompatActivity {
     pagerFragment.setPhotos(paths, currentItem);
     titlebar = (Titlebar) findViewById(R.id.titlebar);
     titlebar.init(this);
+    titlebar.setLeftOnclickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+
+        Intent intent = new Intent();
+        intent.putExtra(KEY_SELECTED_PHOTOS, pagerFragment.getPaths());
+        setResult(RESULT_OK, intent);
+        finish();
+
+      }
+    });
     if (action == MultiPickResultView.ACTION_SELECT){
       titlebar.setRitht(getApplicationContext().getResources().getDrawable(R.drawable.__picker_delete), "", new View.OnClickListener() {
         @Override

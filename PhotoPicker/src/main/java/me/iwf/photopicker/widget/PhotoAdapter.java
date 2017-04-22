@@ -101,7 +101,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             if (photoPaths != null && photoPaths.size() ==9){
               Toast.makeText(mContext,"已选了9张图片",Toast.LENGTH_SHORT).show();
             }else {
-              PhotoPickUtils.startPick((Activity) mContext,false,9,photoPaths);
+              PhotoPickUtils.startPick((Activity) mContext,false,9,photoPaths);// 、、 选择工具
             }
           }
         });
@@ -158,7 +158,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
       holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+//    前往预览删除等等功能的预览页面
           PhotoPreview.builder()
                   .setPhotos(photoPaths)
                   .setAction(action)
@@ -177,7 +177,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
 
   @Override public int getItemCount() {
-    return action == MultiPickResultView.ACTION_SELECT ? photoPaths.size()+1 : photoPaths.size();
+    return action == MultiPickResultView.ACTION_SELECT ? photoPaths.size()+1 : photoPaths.size();// 有没有最后一个
   }
 
 

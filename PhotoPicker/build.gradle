@@ -16,7 +16,7 @@ apply from: '../gradle/gradle-mvn-push.gradle'
 
 repositories {
   jcenter()
-  mavenCentral()  // GPUImage for Android
+//  mavenCentral()  // GPUImage for Android
 }
 
 dependencies {

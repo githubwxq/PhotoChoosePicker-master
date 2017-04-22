@@ -81,7 +81,7 @@ public class PhotoPickerActivity extends AppCompatActivity {
       actionBar.setElevation(25);
     }*/
 
-    maxCount = getIntent().getIntExtra(EXTRA_MAX_COUNT, DEFAULT_MAX_COUNT);
+    maxCount = getIntent().getIntExtra(EXTRA_MAX_COUNT, DEFAULT_MAX_COUNT);// 自定默认大小
     columnNumber = getIntent().getIntExtra(EXTRA_GRID_COLUMN, DEFAULT_COLUMN_NUMBER);
     originalPhotos = getIntent().getStringArrayListExtra(EXTRA_ORIGINAL_PHOTOS);
 
@@ -89,7 +89,7 @@ public class PhotoPickerActivity extends AppCompatActivity {
     if (pickerFragment == null) {
       pickerFragment = PhotoPickerFragment
           .newInstance(showCamera, showGif, previewEnabled, columnNumber, maxCount, originalPhotos);
-      getSupportFragmentManager()
+           getSupportFragmentManager()
           .beginTransaction()
           .replace(R.id.container, pickerFragment, "tag")
           .commit();
@@ -102,24 +102,29 @@ public class PhotoPickerActivity extends AppCompatActivity {
       public void onClick(View v) {
         ArrayList<String> photos = pickerFragment.getPhotoGridAdapter().getSelectedPhotoPaths();
         if (photos != null && photos.size() > 0){
+
+            // 图片选择完成返回适配器中图片的数量
           Intent intent = new Intent();
           intent.putStringArrayListExtra(KEY_SELECTED_PHOTOS, photos);
           setResult(RESULT_OK, intent);
           finish();
+
         }else {
           Toast.makeText(getApplicationContext(),"还没有选择图片",Toast.LENGTH_SHORT).show();
         }
       }
     });
 
+
+      // 判断是否可以继续选 获取适配器中选择的数量
     pickerFragment.getPhotoGridAdapter().setOnItemCheckListener(new OnItemCheckListener() {
       @Override public boolean OnItemCheck(int position, Photo photo, final boolean isCheck, int selectedItemCount) {
 
+         // 加适配中的参数回调到activity中 activity中处理逻辑 然后又返回对应的参数 适配器更具对应的参数继续下一步操作
+        //  、、回调选中的图片数量给activity
         int total = selectedItemCount + (isCheck ? -1 : 1);
 
        // menuDoneItem.setEnabled(total > 0);
-
-
         if (maxCount <= 1) {
           List<Photo> photos = pickerFragment.getPhotoGridAdapter().getSelectedPhotos();
           if (!photos.contains(photo)) {
@@ -134,7 +139,14 @@ public class PhotoPickerActivity extends AppCompatActivity {
               LENGTH_LONG).show();
           return false;
         }
+
+
+
         titlebar.getTvRight().setText(getString(R.string.__picker_done_with_count, total, maxCount));
+
+          
+       //   判断选的数量有没有超过最大数量
+
         return true;
       }
     });
@@ -160,7 +172,7 @@ public class PhotoPickerActivity extends AppCompatActivity {
     }
   }
 
-
+   // 切换fragment 并添加到回退站中去
   public void addImagePagerFragment(ImagePagerFragment imagePagerFragment) {
     this.imagePagerFragment = imagePagerFragment;
     getSupportFragmentManager()
