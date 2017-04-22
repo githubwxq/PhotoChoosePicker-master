@@ -87,7 +87,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
       holder.ivPhoto.setPadding(padding,padding,padding,padding);
 
 
-      if (position == getItemCount() -1){//最后一个始终是+号，点击能够跳去添加图片
+      if (position == getItemCount() -1){ //最后一个始终是+号，点击能够跳去添加图片
         Glide.with(mContext)
                 .load("")
                 .centerCrop()
@@ -95,6 +95,14 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                 .placeholder(R.drawable.icon_pic_default)
                 .error(R.drawable.icon_pic_default)
                 .into(holder.ivPhoto);
+
+          if (photoPaths != null && photoPaths.size() ==9){
+              holder.ivPhoto.setVisibility(View.GONE);
+          }else {
+              holder.ivPhoto.setVisibility(View.VISIBLE);
+          }
+
+
         holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
@@ -109,6 +117,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         holder.deleteBtn.setVisibility(View.GONE);
 
       }else {
+
+              holder.ivPhoto.setVisibility(View.VISIBLE);
+
+
+
+
+
         String str = photoPaths.get(position);
         Log.e("file",str);
         Uri uri = Uri.fromFile(new File(photoPaths.get(position)));

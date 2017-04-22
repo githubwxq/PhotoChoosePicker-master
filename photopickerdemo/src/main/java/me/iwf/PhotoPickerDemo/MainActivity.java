@@ -156,21 +156,67 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-   /* if (resultCode == RESULT_OK &&
-        (requestCode == PhotoPicker.REQUEST_CODE || requestCode == PhotoPreview.REQUEST_CODE)) {
+//    if (resultCode == RESULT_OK &&
+//        (requestCode == PhotoPicker.REQUEST_CODE || requestCode == PhotoPreview.REQUEST_CODE)) {
+//
+//      List<String> photos = null;
+//      if (data != null) {
+//        photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+//      }
+//      selectedPhotos.clear();
+//
+//      if (photos != null) {
+//
+//        selectedPhotos.addAll(photos);
+//      }
+//
+//
+//        for (int i = 0; i < photos.size(); i++) {
+//            File  file=new File(photos.get(i));
+//            Log.i("wxq","size"+"源文件"+file.length());
+//
+//        }
+//   String temimg=Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "AAAaaawxq/takePhotoImageTemp";
+//        File file = new File(temimg);
+//        //判断文件夹是否存在,如果不存在则创建文件夹
+//        if (!file.exists()) {
+//
+//            if(file.mkdir()){
+//                long afb=121212;
+//                //创建陈宫
+//                //读写权限
+//            }else{
+//                long afb=11;
+//                //创建陈宫
+//            }
+//
+//
+//        }
+//        for (int i = 0; i < photos.size(); i++) {
+//            File  oldFile=new File(photos.get(i));
+//            long size3=oldFile.length();
+//
+//               File   newFile = new CompressHelper.Builder(this)
+//                .setMaxWidth(720)  // 默认最大宽度为720
+//                .setMaxHeight(960) // 默认最大高度为960
+//                .setQuality(80)    // 默认压缩质量为80
+//                .setCompressFormat(Bitmap.CompressFormat.JPEG) // 设置默认压缩为jpg格式
+//               .setDestinationDirectoryPath(temimg)
+//                  .setFileName(oldFile.getName().substring(0, oldFile.getName().lastIndexOf("."))) // 设置你的文件名
+//                       .build()
+//                       .compressToFile(oldFile);
+//
+//            Log.i("wxq","size"+"压缩后台"+newFile.length());
+//
+//            long size=newFile.length();
+//            long size2=newFile.length();
+//        }
+//
 
-      List<String> photos = null;
-      if (data != null) {
-        photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
-      }
-      selectedPhotos.clear();
 
-      if (photos != null) {
 
-        selectedPhotos.addAll(photos);
-      }
-      photoAdapter.notifyDataSetChanged();
-    }*/
+    //  photoAdapter.notifyDataSetChanged();
+//    }
   }
 
   @Override
@@ -194,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   public boolean shouldShowRequestPermissionRationale(@NonNull String permission) {
     switch (permission) {
-      case Manifest.permission.READ_EXTERNAL_STORAGE:
+      case Manifest.permission.WRITE_EXTERNAL_STORAGE:
       case Manifest.permission.CAMERA:
         // No need to explain to user as it is obvious
         return false;
@@ -205,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void checkPermission(@NonNull RequestCode requestCode) {
 
-    int readStoragePermissionState = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+    int readStoragePermissionState = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     int cameraPermissionState = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
 
     boolean readStoragePermissionGranted = readStoragePermissionState != PackageManager.PERMISSION_GRANTED;
@@ -215,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
 
       // Should we show an explanation?
       if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-          Manifest.permission.READ_EXTERNAL_STORAGE)
+          Manifest.permission.WRITE_EXTERNAL_STORAGE)
           || ActivityCompat.shouldShowRequestPermissionRationale(this,
           Manifest.permission.CAMERA)) {
 
@@ -226,10 +272,10 @@ public class MainActivity extends AppCompatActivity {
       } else {
         String[] permissions;
         if (readStoragePermissionGranted && cameraPermissionGranted) {
-          permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA };
+          permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA };
         } else {
           permissions = new String[] {
-              readStoragePermissionGranted ? Manifest.permission.READ_EXTERNAL_STORAGE
+              readStoragePermissionGranted ? Manifest.permission.WRITE_EXTERNAL_STORAGE
                   : Manifest.permission.CAMERA
           };
         }
